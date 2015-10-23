@@ -6,17 +6,14 @@ import (
 	"strings"
 )
 
-var pessoas []map[string]interface{}
+var pessoas []map[string]interface{} = make([]map[string]interface{}, 0)
 
 func main() {
-	pessoas = make([]map[string]interface{}, 0)
-
 	r := gin.Default()
 
 	r.GET("/pessoas", func(c *gin.Context) {
 		c.JSON(200, pessoas)
 	})
-
 	r.POST("/pessoas", func(c *gin.Context) {
 		pessoa := make(map[string]interface{})
 		c.BindJSON(&pessoa)
@@ -25,8 +22,7 @@ func main() {
 
 		c.AbortWithStatus(http.StatusOK)
 	})
-
-	r.POST("/pessoas/:name", func(c *gin.Context) {
+	r.DELETE("/pessoas/:name", func(c *gin.Context) {
 		name := c.Param("name")
 
 		newCollection := make([]map[string]interface{}, 0)
